@@ -37,6 +37,7 @@ class AppFixtures extends Fixture
             $companyName = $companyInfo['Name'][$numCompany];
             $company->setRoles($roles);
             $company->setUsername($companyName);
+            $plainPassword = 'password'.(string)$numCompany;
             $encoded = $this->encoder->encodePassword($company, $plainPassword);
             $company->setPassword($encoded);
             $company->setNameCompany($companyName);
