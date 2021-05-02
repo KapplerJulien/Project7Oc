@@ -48,18 +48,23 @@ I make a documentation of the API and you can test from it. Route : (your localh
 User test : 
 
 Pseudo : Locami
+
 Password : password0
 
 Pseudo : Vreelodie
+
 Password : password1
 
 Pseudo : Greffoldy
+
 Password : password2
 
 Pseudo : Crompangie
+
 Password : password3
 
 Pseudo : Polcaloid
+
 Password : password4
 
 And you can connect like this with Postman : 
@@ -72,43 +77,43 @@ So, there is a green button at the top right of the doc, click on it and we will
 
 When you click on a URL to test, don't forget to click on the button "try it out", if you don't click it, you'll not be able to test.
 
-Get details of one phone : 
+### Get details of one phone : 
 
 ![GetPhone execute](https://i.imgur.com/JsPudeg.png)
 
 ![GetPhone response](https://i.imgur.com/nvZtywc.png)
 
-Phone index : 
+### Phone index : 
 
 ![PhoneIndex execute](https://i.imgur.com/oq4RfbR.png)
 
 ![PhoneIndex response](https://i.imgur.com/9E99iyn.png)
 
-Phone edit : 
+### Phone edit : 
 
 ![PhoneEdit execute](https://i.imgur.com/yMuxMJm.png)
 
 ![PhoneEdit response](https://i.imgur.com/ssgGiX5.png)
 
-Get details of one user : 
+### Get details of one user : 
 
 ![UserDetails execute](https://i.imgur.com/DPu1dEv.png)
 
 ![UserDetails response](https://i.imgur.com/mwH72dX.png)
 
-User index : 
+### User index : 
 
 ![UserIndex execute](https://i.imgur.com/LW1Y1ql.png)
 
 ![UserIndex response](https://i.imgur.com/TEspbab.png)
 
-Delete user : 
+### Delete user : 
 
 ![UserDelete execute](https://i.imgur.com/0jVRIKi.png)
 
 ![UserDelete response](https://i.imgur.com/wDrOrRk.png)
 
-Add user : 
+### Add user : 
 
 ![UserDelete execute](https://i.imgur.com/rXVtA6R.png)
 
