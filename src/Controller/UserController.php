@@ -17,6 +17,24 @@ use Symfony\Component\Security\Core\Security;
 class UserController extends AbstractController
 {
     /**
+     * @Route("/users/{id}", name="show_user", methods={"GET"})
+     */
+    public function show(User $user, UserRepository $userRepository, SerializerInterface $serializer)
+    {
+        $company = $this->getUser();
+        $user = $userRepository->findOneBy([
+            'id' => $user->getId(),
+            'company' => $company
+        ]);
+        $data = $serializer->serialize($user, 'json', [
+            'groups' => ['show']
+        ]);
+        return new Response($data, 200, [
+            'Content-Type' => 'application/json'
+        ]);
+    }
+
+    /**
      * @Route("/users/", name="list_user", methods={"GET"})
      */
     public function index(Request $request, UserRepository $userRepository, SerializerInterface $serializer): Response
