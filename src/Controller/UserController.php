@@ -12,6 +12,9 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Doctrine\ORM\EntityManagerInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security as Secu;
+use OpenApi\Annotations as OA;
 
 /**
  * @Route("/api")
@@ -20,6 +23,17 @@ class UserController extends AbstractController
 {
     /**
      * @Route("/users/{id}", name="show_user", methods={"GET"})
+     * @OA\Response(
+     *         response=200,
+     *         description="Return details of one user",
+     *         @Model(type=User::class, groups={"show"})
+     * )
+     * @OA\Response(
+     *         response=404,
+     *         description="This user don't exist"
+     * )
+     * @OA\Tag(name="User")
+     * @Secu(name="Bearer")
      */
     public function show(User $user, UserRepository $userRepository, SerializerInterface $serializer)
     {
@@ -38,6 +52,20 @@ class UserController extends AbstractController
 
     /**
      * @Route("/users/", name="list_user", methods={"GET"})
+     * @OA\Parameter(
+     *     name="page",
+     *     in="query",
+     *     description="Page",
+     *     required=false,
+     *     @OA\Schema(type="integer")
+     * ),
+     * @OA\Response(
+     *         response=200,
+     *         description="Return an array of users",
+     *         @Model(type=User::class, groups={"list"})
+     * )
+     * @OA\Tag(name="User")
+     * @Secu(name="Bearer")
      */
     public function index(Request $request, UserRepository $userRepository, SerializerInterface $serializer): Response
     {
@@ -59,6 +87,24 @@ class UserController extends AbstractController
 
     /**
      * @Route("/users", name="add_user", methods={"POST"})
+     * @OA\RequestBody(
+     *     request="User",
+     *     description="Add new User",
+     *     required=true,
+     *     @OA\JsonContent(@OA\Schema(
+     *         type="json"
+     *     )),     
+     * )
+     * @OA\Response(
+     *         response=200,
+     *         description="Add succeded"
+     * )
+     * @OA\Response(
+     *         response=401,
+     *         description="Add failed"
+     * )
+     * @OA\Tag(name="User")
+     * @Secu(name="Bearer")
      */
     public function new(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager)
     {
@@ -76,6 +122,16 @@ class UserController extends AbstractController
 
     /**
      * @Route("/users/{id}", name="delete_phone", methods={"DELETE"})
+     * @OA\Response(
+     *         response=200,
+     *         description="Delete succeded"
+     * )
+     * @OA\Response(
+     *         response=401,
+     *         description="Delete failed"
+     * )
+     * @OA\Tag(name="User")
+     * @Secu(name="Bearer")
      */
     public function delete(User $user, EntityManagerInterface $entityManager)
     {
