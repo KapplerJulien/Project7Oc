@@ -11,6 +11,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security as Secu;
+use OpenApi\Annotations as OA;
 
 /**
  * @Route("/api")
@@ -19,6 +22,17 @@ class PhoneController extends AbstractController
 {
     /**
      * @Route("/phones/{id}", name="show_phone", methods={"GET"})
+     * @OA\Response(
+     *         response=200,
+     *         description="Return details of one phone",
+     *         @Model(type=Phone::class, groups={"show"})
+     * )
+     * @OA\Response(
+     *         response=404,
+     *         description="This phone don't exist"
+     * )
+     * @OA\Tag(name="Phone")
+     * @Secu(name="Bearer")
      */
     public function show(Phone $phone, PhoneRepository $phoneRepository, SerializerInterface $serializer)
     {
@@ -32,7 +46,21 @@ class PhoneController extends AbstractController
     }
 
     /**
-     * @Route("/phones/{page<\d+>?1}", name="list_phone", methods={"GET"})
+     * @Route("/phones/", name="list_phone", methods={"GET"})
+     * @OA\Parameter(
+     *     name="page",
+     *     in="query",
+     *     description="Page",
+     *     required=false,
+     *     @OA\Schema(type="integer")
+     * ),
+     * @OA\Response(
+     *         response=200,
+     *         description="Return an array of phones",
+     *         @Model(type=Phone::class, groups={"list"})
+     * )
+     * @OA\Tag(name="Phone")
+     * @Secu(name="Bearer")
      */
     public function index(Request $request, PhoneRepository $phoneRepository, SerializerInterface $serializer)
     {
@@ -53,6 +81,24 @@ class PhoneController extends AbstractController
 
     /**
      * @Route("/phones/edit/{id}", name="update_phone", methods={"PUT"})
+     * @OA\RequestBody(
+     *     request="Phone update",
+     *     description="Modification you want to do",
+     *     required=true,
+     *     @OA\JsonContent(@OA\Schema(
+     *         type="json"
+     *     )),     
+     * )
+     * @OA\Response(
+     *         response=200,
+     *         description="Modification succeded"
+     * )
+     * @OA\Response(
+     *         response=401,
+     *         description="Modification failed"
+     * )
+     * @OA\Tag(name="Phone")
+     * @Secu(name="Bearer")
      */
     public function update(Request $request, SerializerInterface $serializer, Phone $phone, EntityManagerInterface $entityManager)
     {
