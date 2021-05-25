@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security as Secu;
 use OpenApi\Annotations as OA;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/api")
@@ -97,10 +98,14 @@ class PhoneController extends AbstractController
      *         response=401,
      *         description="Modification failed"
      * )
+     * @OA\Response(
+     *     response=500,
+     *     description="Errors"
+     * )
      * @OA\Tag(name="Phone")
      * @Secu(name="Bearer")
      */
-    public function update(Request $request, SerializerInterface $serializer, Phone $phone, EntityManagerInterface $entityManager)
+    public function update(Request $request, SerializerInterface $serializer, Phone $phone, EntityManagerInterface $entityManager, ValidatorInterface $validator)
     {
         $phoneUpdate = $entityManager->getRepository(Phone::class)->find($phone->getId());
         $data = json_decode($request->getContent());
@@ -110,6 +115,14 @@ class PhoneController extends AbstractController
                 $setter = 'set'.$name;
                 $phoneUpdate->$setter($value);
             }
+        }
+        $errors = $validator->validate($phoneUpdate);
+        var_dump(count($errors));
+        if(count($errors)) {
+            $errors = $serializer->serialize($errors, 'json');
+            return new Response($errors, 500, [
+                'Content-Type' => 'application/json'
+            ]);
         }
         $entityManager->flush();
         $data = [

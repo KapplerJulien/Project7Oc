@@ -7,9 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"username"}, message="Cet utilisateur existe déjà")
  */
 class User
 {
@@ -24,24 +27,32 @@ class User
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"list", "show"})
+     * @Assert\NotBlank()
+     * @Assert\Length(min="2", minMessage="Ce champ doit contenir un minimum de 2 caractères", max="255", maxMessage="Ce champ doit contenir un maximum de 255 caractères")
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"list", "show"})
+     * @Assert\NotBlank()
+     * @Assert\Length(min="2", minMessage="Ce champ doit contenir un minimum de 2 caractères", max="255", maxMessage="Ce champ doit contenir un maximum de 255 caractères")
      */
     private $NameUser;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"list", "show"})
+     * @Assert\NotBlank()
+     * @Assert\Length(min="2", minMessage="Ce champ doit contenir un minimum de 2 caractères", max="255", maxMessage="Ce champ doit contenir un maximum de 255 caractères")
      */
     private $LastNameUser;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"list", "show"})
+     * @Assert\NotBlank()
+     * @Assert\Length(min="2", minMessage="Ce champ doit contenir un minimum de 2 caractères", max="255", maxMessage="Ce champ doit contenir un maximum de 255 caractères")
      */
     private $MailUser;
 

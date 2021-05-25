@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PhoneRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PhoneRepository::class)
@@ -22,30 +23,40 @@ class Phone
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"list", "show"})
+     * @Assert\NotBlank()
+     * @Assert\Length(min="2", minMessage="Ce champ doit contenir un minimum de 2 caractères", max="255", maxMessage="Ce champ doit contenir un maximum de 255 caractères")
      */
     private $NamePhone;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"list", "show"})
+     * @Assert\NotBlank()
+     * @Assert\Length(min="2", minMessage="Ce champ doit contenir un minimum de 2 caractères", max="255", maxMessage="Ce champ doit contenir un maximum de 255 caractères")
      */
     private $ColorPhone;
 
     /**
      * @ORM\Column(type="integer")
      * @Groups({"list", "show"})
+     * @Assert\NotBlank()
+     * @Assert\Range(min="0", minMessage="La valeur minimum autorisée est 0", max="1500", maxMessage="La valeur maximum autorisée est 1500")
      */
     private $QuantityPhone;
 
     /**
      * @ORM\Column(type="float")
      * @Groups({"list", "show"})
+     * @Assert\NotBlank()
+     * @Assert\Range(min="0", minMessage="La valeur minimum autorisée est 0", max="1500", maxMessage="La valeur maximum autorisée est 1500")
      */
     private $PricePhone;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"list", "show"})
+     * @Assert\NotBlank()
+     * @Assert\Length(min="2", minMessage="Ce champ doit contenir un minimum de 2 caractères", max="255", maxMessage="Ce champ doit contenir un maximum de 255 caractères")
      */
     private $BrandPhone;
 
