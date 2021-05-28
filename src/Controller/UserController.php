@@ -15,6 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security as Secu;
 use OpenApi\Annotations as OA;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/api")
@@ -106,11 +107,18 @@ class UserController extends AbstractController
      * @OA\Tag(name="User")
      * @Secu(name="Bearer")
      */
-    public function new(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager)
+    public function new(Request $request, SerializerInterface $serializer, EntityManagerInterface $entityManager, ValidatorInterface $validator)
     {
         $user = $serializer->deserialize($request->getContent(), User::class, 'json');
         $company = $this->getUser();
         $user->setCompany($company);
+        $errors = $validator->validate($user);
+        if(count($errors)) {
+            $errors = $serializer->serialize($errors, 'json');
+            return new Response($errors, 500, [
+                'Content-Type' => 'application/json'
+            ]);
+        }
         $entityManager->persist($user);
         $entityManager->flush();
         $data = [
