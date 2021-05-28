@@ -124,3 +124,21 @@ When you click on a URL to test, don't forget to click on the button "try it out
 ### NelmioApiDocBundle
 
 [NelmioApiDocBundle](https://symfony.com/doc/4.x/bundles/NelmioApiDocBundle/index.html)
+
+### Doctrine & Fixtures
+
+[Doctrine](https://symfony.com/doc/current/doctrine.html)
+
+[Fixtures](https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html)
+
+### Validator
+
+[Validator](https://symfony.com/doc/current/validation.html)
+
+### Serializer 
+
+[Serializer](https://symfony.com/doc/current/components/serializer.html)
+
+## Code climate
+
+![Image Code climate A](https://i.imgur.com/QQhqMtR.png)
